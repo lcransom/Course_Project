@@ -1,8 +1,11 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+# Create the Flask app.
 app = Flask(__name__)
+# Tell the app to save its data in this SQLite database file.
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///strength_training.db"
+# Turn off extra database change tracking that this app doesn't use.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
