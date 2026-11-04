@@ -24,6 +24,9 @@ Then open http://127.0.0.1:5000 in your browser.
 
 ## GitHub
 
+The repository includes `instance/strength_training.db` so collaborators can use
+the current database contents.
+
 After creating an empty repository on GitHub, connect it and push this project:
 
 ```bash
