@@ -28,18 +28,24 @@ class Equipment(db.Model):
     category = db.Column(db.String(80), nullable=False)
     target_muscle_focus = db.Column(db.String(120), nullable=False)
 
+    exercises = db.relationship("Exercise", back_populates="equipment")
 
-# Store exercises and the muscle group each exercise works.
+
+# Store exercises and their muscle group and equipment.
 class Exercise(db.Model):
     exercise_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     muscle_group_id = db.Column(
         db.Integer, db.ForeignKey("muscle_group.muscle_group_id"), nullable=False
+    )
+    equipment_id = db.Column(
+        db.Integer, db.ForeignKey("equipment.equipment_id"), nullable=False
     )
     name = db.Column(db.String(100), nullable=False, unique=True)
     mechanic_type = db.Column(db.String(40), nullable=False)
     difficulty_level = db.Column(db.String(40), nullable=False)
 
     muscle_group = db.relationship("MuscleGroup", back_populates="exercises")
+    equipment = db.relationship("Equipment", back_populates="exercises")
     workout_exercises = db.relationship(
         "WorkoutExercise", back_populates="exercise"
     )
