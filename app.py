@@ -80,8 +80,8 @@ class WorkoutExercise(db.Model):
 
 
 @app.route("/")
-def hello_world():
-    return "Hello World!"
+def workout_pag():
+    return "Workout page"
 
 
 if __name__ == "__main__":
