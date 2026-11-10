@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Muscle Groups</title>
+</head>
+<body>
+    <h1>Muscle Groups</h1>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% elif muscle_groups %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Target Region</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for muscle_group in muscle_groups %}
+                    <tr>
+                        <td>{{ muscle_group.name }}</td>
+                        <td>{{ muscle_group.target_region }}</td>
+                        <td>{{ muscle_group.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No muscle groups have been added yet.</p>
+    {% endif %}
+</body>
+</html>

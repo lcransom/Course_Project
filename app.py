@@ -1,24 +1,17 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+
+from database import initialize_database
+from extensions import db
+
+# Import the model so SQLAlchemy knows about its table.
+from app.muscle_group.models import MuscleGroup
+from app.muscle_group import muscle_group_bp
+from app.muscle_group import muscle_group_controller
 
 # Create the Flask app.
 app = Flask(__name__)
-# Tell the app to save its data in this SQLite database file.
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///strength_training.db"
-# Turn off extra database change tracking that this app doesn't use.
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
-
-
-# Store information about muscle groups like chest, legs, or back.
-class MuscleGroup(db.Model):
-    muscle_group_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(80), nullable=False, unique=True)
-    target_region = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-
-    exercises = db.relationship("Exercise", back_populates="muscle_group")
+initialize_database(app)
+app.register_blueprint(muscle_group_bp)
 
 
 # Store information about gym equipment.
