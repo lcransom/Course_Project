@@ -1,2 +1,0 @@
-class EquipmentDataError(Exception):
-    pass
