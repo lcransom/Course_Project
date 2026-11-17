@@ -1,3 +1,7 @@
+# Authors: Levi Ransom, Roger Major
+# Date: 11/17/2026
+# File: muscle_group_manager.py
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.muscle_group.models import MuscleGroup

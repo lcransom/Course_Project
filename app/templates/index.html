@@ -1,0 +1,21 @@
+<!-- Authors: Levi Ransom, Roger Major
+     Date: 11/17/2026
+     File: index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FitTrack</title>
+</head>
+<body>
+    <h1>FitTrack</h1>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="{{ url_for('muscle_group.list_muscle_groups') }}">Muscle groups</a></li>
+            <li><a href="{{ url_for('equipment.list_equipment') }}">Equipment</a></li>
+            <li><a href="{{ url_for('workout_session.list_workouts') }}">Workout sessions</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

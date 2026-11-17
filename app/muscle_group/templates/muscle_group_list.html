@@ -1,3 +1,6 @@
+<!-- Authors: Levi Ransom, Roger Major
+     Date: 11/17/2026
+     File: muscle_group_list.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,9 +10,10 @@
 </head>
 <body>
     <h1>Muscle Groups</h1>
+    <p><a href="{{ url_for('index') }}">Home</a></p>
 
     {% if error_message %}
-        <p>{{ error_message }}</p>
+        <p role="alert">{{ error_message }}</p>
     {% elif muscle_groups %}
         <table>
             <thead>

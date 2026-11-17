@@ -1,2 +1,0 @@
-class WorkoutDataError(Exception):
-    pass
