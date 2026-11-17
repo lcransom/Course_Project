@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: models.py
+# Description: Define the workout session database model and its exercises relationship.
 
 from extensions import db
 

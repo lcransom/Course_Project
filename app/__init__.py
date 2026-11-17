@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: __init__.py
+# Description: Create the Flask application, register routes, and configure error handling.
 
 from flask import Flask, render_template
 from sqlalchemy.exc import SQLAlchemyError

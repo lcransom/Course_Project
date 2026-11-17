@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: __init__.py
+# Description: Define and configure the workout session Blueprint.
 
 from flask import Blueprint
 

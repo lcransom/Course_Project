@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: workout_manager.py
+# Description: Retrieve workout sessions and handle database read errors.
 
 from sqlalchemy.exc import SQLAlchemyError
 

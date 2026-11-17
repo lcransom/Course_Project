@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: workout_controller.py
+# Description: Load workout session data and render the workout page.
 
 from flask import render_template
 

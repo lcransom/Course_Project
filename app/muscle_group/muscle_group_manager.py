@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: muscle_group_manager.py
+# Description: Retrieve muscle group records and handle database read errors.
 
 from sqlalchemy.exc import SQLAlchemyError
 

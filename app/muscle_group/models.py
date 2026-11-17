@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: models.py
+# Description: Define the muscle group database model and its exercise relationship.
 
 from extensions import db
 

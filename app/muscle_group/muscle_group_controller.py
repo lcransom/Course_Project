@@ -1,6 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: muscle_group_controller.py
+# Description: Load muscle group data and render the muscle group page.
 
 from flask import render_template
 
