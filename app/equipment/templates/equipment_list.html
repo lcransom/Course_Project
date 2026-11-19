@@ -1,4 +1,4 @@
-<!-- Authors: Levi Ransom
+<!-- Authors: Levi Ransom, Roger Major
      Date: 11/17/2026
      File: equipment_list.html -->
 <!doctype html>
@@ -11,7 +11,8 @@
 <body>
     <h1>Gym Equipment</h1>
     <p><a href="{{ url_for('index') }}">Home</a></p>
-        <form method="get" action="{{ url_for('equipment.list_equipment') }}">
+    <!-- Submit filter, sort, and result-limit choices to the equipment route. -->
+    <form method="get" action="{{ url_for('equipment.list_equipment') }}">
         <label for="category">Filter by category:</label>
         <input
             type="text"

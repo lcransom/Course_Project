@@ -1,7 +1,7 @@
 # Authors: Levi Ransom, Roger Major
 # Date: 11/17/2026
 # File: equipment_manager.py
-# Description: Retrieve all equipment or filter records by category.
+# Description: Retrieve equipment with optional category filtering, sorting, and limits.
 
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -12,24 +12,29 @@ from extensions import db
 
 def get_all_equipment(category=None, sort_by="name", sort_order="asc", limit=None):
     try:
-        query = Equipment.query
+        statement = db.select(Equipment)
+        # Allow only known model columns so URL input cannot select arbitrary sort fields.
         sort_columns = {
             "name": Equipment.name,
             "category": Equipment.category,
             "target_muscle_focus": Equipment.target_muscle_focus,
         }
         if category:
-            query = query.filter(Equipment.category == category)
+            # Apply the category filter before sorting and limiting the results.
+            statement = statement.where(Equipment.category == category)
 
-        sort_column = sort_columns.get(sort_by, Equipment.name)
+        sort_column = (
+            sort_columns[sort_by] if sort_by in sort_columns else Equipment.name
+        )
         if sort_order == "desc":
-            query = query.order_by(sort_column.desc())
+            statement = statement.order_by(sort_column.desc())
         else:
-            query = query.order_by(sort_column.asc())
+            statement = statement.order_by(sort_column.asc())
         if limit is not None:
-            query = query.limit(limit)
+            # Limit the final filtered and sorted result set.
+            statement = statement.limit(limit)
 
-        return query.all()
+        return db.session.scalars(statement).all()
     except SQLAlchemyError as error:
         db.session.rollback()
         raise EquipmentDataError(

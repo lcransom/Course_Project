@@ -5,7 +5,7 @@
 
 from sqlalchemy import and_, or_
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload, selectinload
+from sqlalchemy.orm import selectinload
 
 from app.core.models import Exercise
 from app.muscle_group.models import MuscleGroup
@@ -17,12 +17,10 @@ def get_all_muscle_groups():
     # Load related exercises and equipment with the muscle groups so the
     # template can display the relationships without issuing extra queries.
     try:
-        return (
-            MuscleGroup.query.options(
-                selectinload(MuscleGroup.exercises).joinedload(Exercise.equipment)
-            )
-            .all()
+        statement = db.select(MuscleGroup).options(
+            selectinload(MuscleGroup.exercises).joinedload(Exercise.equipment)
         )
+        return db.session.scalars(statement).all()
     except SQLAlchemyError as error:
         db.session.rollback()
         raise MuscleGroupDataError(
@@ -43,7 +41,7 @@ def search_muscle_groups(search_query):
 
     try:
         # Load each muscle group's exercises and each exercise's equipment.
-        query = MuscleGroup.query.options(
+        statement = db.select(MuscleGroup).options(
             selectinload(MuscleGroup.exercises).joinedload(Exercise.equipment)
         )
 
@@ -57,7 +55,8 @@ def search_muscle_groups(search_query):
             for term in terms
         ]
 
-        return query.filter(and_(*conditions)).all()
+        statement = statement.where(and_(*conditions))
+        return db.session.scalars(statement).all()
 
     except SQLAlchemyError as error:
         db.session.rollback()

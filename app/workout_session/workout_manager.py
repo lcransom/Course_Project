@@ -12,9 +12,10 @@ from extensions import db
 
 def get_all_workout_sessions():
     try:
-        return WorkoutSession.query.order_by(
+        statement = db.select(WorkoutSession).order_by(
             WorkoutSession.workout_date.desc()
-        ).all()
+        )
+        return db.session.scalars(statement).all()
     except SQLAlchemyError as error:
         db.session.rollback()
         raise WorkoutDataError(

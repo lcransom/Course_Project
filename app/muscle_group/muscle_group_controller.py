@@ -13,16 +13,10 @@ class MuscleGroupController:
     def list_muscle_groups():
         # Grab the 'search' parameter from the URL (e.g., /muscle-groups?search=upper)
         search_query = request.args.get("search", "").strip()
+        muscle_groups = search_muscle_groups(search_query)
 
-        try:
-            # Call the search manager (which falls back to all records if query is empty)
-            muscle_groups = search_muscle_groups(search_query)
-
-            return render_template(
-                "muscle_group_list.html",
-                muscle_groups=muscle_groups,
-                search_query=search_query
-            )
-        except Exception as e:
-
-            raise
+        return render_template(
+            "muscle_group_list.html",
+            muscle_groups=muscle_groups,
+            search_query=search_query,
+        )

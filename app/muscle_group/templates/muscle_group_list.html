@@ -7,11 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Muscle Groups</title>
-    <style>
-        .search-form { margin-bottom: 20px; }
-        .search-form input { padding: 5px; width: 250px; }
-        .search-form button { padding: 5px 10px; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='muscle_group.css') }}">
 </head>
 <body>
     <h1>Muscle Groups</h1>
@@ -29,12 +25,12 @@
         <button type="submit">Search</button>
         {% if search_query %}
             <a href="{{ url_for('muscle_group.list_muscle_groups') }}"
-               style="margin-left: 10px;">Clear</a>
+               class="search-clear">Clear</a>
         {% endif %}
     </form>
 
     {% if error_message %}
-        <p role="alert" style="color: red;">{{ error_message }}</p>
+        <p role="alert" class="error-message">{{ error_message }}</p>
     {% elif search_query and not muscle_groups %}
         <p>No muscle groups found matching
             "<strong>{{ search_query }}</strong>".</p>
@@ -44,7 +40,7 @@
                 "<strong>{{ search_query }}</strong>":</p>
         {% endif %}
 
-        <table border="1" cellpadding="5" cellspacing="0">
+        <table class="results-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -59,6 +55,7 @@
                         <td>{{ muscle_group.name }}</td>
                         <td>{{ muscle_group.target_region }}</td>
                         <td>{{ muscle_group.description }}</td>
+                        <!-- Display related exercises and equipment through ORM relationships. -->
                         <td>
                             {% if muscle_group.exercises %}
                                 <ul>

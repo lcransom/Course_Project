@@ -42,7 +42,7 @@ def create_app():
     @app.errorhandler(EquipmentDataError)
     @app.errorhandler(MuscleGroupDataError)
     @app.errorhandler(WorkoutDataError)
-    def handle_data_error(error):
+    def handle_data_error(_error):
         db.session.rollback()
         app.logger.exception("Unhandled data access error")
         return render_template("500.html"), 500
