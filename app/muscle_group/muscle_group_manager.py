@@ -13,6 +13,15 @@ from app.muscle_group.muscle_group_exceptions import MuscleGroupDataError
 from extensions import db
 
 
+# --- CENTRALIZED EXCEPTION HANDLER ---
+def _handle_query_error(action, error):
+    """Centralized error handler for all muscle group database operations."""
+    db.session.rollback()
+    raise MuscleGroupDataError(
+        f"Muscle groups could not be {action}. Please try again later."
+    ) from error
+
+
 def get_all_muscle_groups():
     # Load related exercises and equipment with the muscle groups so the
     # template can display the relationships without issuing extra queries.
@@ -22,10 +31,7 @@ def get_all_muscle_groups():
         )
         return db.session.scalars(statement).all()
     except SQLAlchemyError as error:
-        db.session.rollback()
-        raise MuscleGroupDataError(
-            "Muscle groups could not be loaded. Please try again later."
-        ) from error
+        _handle_query_error("loaded", error)
 
 
 def search_muscle_groups(search_query):
@@ -59,7 +65,4 @@ def search_muscle_groups(search_query):
         return db.session.scalars(statement).all()
 
     except SQLAlchemyError as error:
-        db.session.rollback()
-        raise MuscleGroupDataError(
-            "Search results could not be loaded. Please try again later."
-        ) from error
+        _handle_query_error("searched", error)

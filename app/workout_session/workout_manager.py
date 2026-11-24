@@ -10,6 +10,15 @@ from app.workout_session.workout_exceptions import WorkoutDataError
 from extensions import db
 
 
+# --- CENTRALIZED EXCEPTION HANDLER ---
+def _handle_query_error(error):
+    """Centralized error handler for all workout database operations."""
+    db.session.rollback()
+    raise WorkoutDataError(
+        "Workout sessions could not be loaded. Please try again later."
+    ) from error
+
+
 def get_all_workout_sessions():
     try:
         statement = db.select(WorkoutSession).order_by(
@@ -17,7 +26,4 @@ def get_all_workout_sessions():
         )
         return db.session.scalars(statement).all()
     except SQLAlchemyError as error:
-        db.session.rollback()
-        raise WorkoutDataError(
-            "Workout sessions could not be loaded. Please try again later."
-        ) from error
+        _handle_query_error(error)
