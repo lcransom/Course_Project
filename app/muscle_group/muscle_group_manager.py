@@ -17,16 +17,6 @@ from extensions import db
 
 
 class MuscleGroupManager:
-    @staticmethod
-    def handle_exceptions(e) -> NoReturn:
-        """Centralized exception handler for the Muscle Group domain."""
-        db.session.rollback()
-        if isinstance(e, MuscleGroupDataError):
-            abort(500, description=str(e))
-        elif isinstance(e, SQLAlchemyError):
-            abort(500, description=f"A database error has occurred: {str(e)}")
-        else:
-            abort(500, description=str(e))
 
     @staticmethod
     def get_all_muscle_groups():
@@ -67,3 +57,14 @@ class MuscleGroupManager:
             return db.session.scalars(statement).all()
         except Exception as e:
             MuscleGroupManager.handle_exceptions(e)
+
+            @staticmethod
+            def handle_exceptions(e) -> NoReturn:
+                """Centralized exception handler for the Muscle Group domain."""
+                db.session.rollback()
+                if isinstance(e, MuscleGroupDataError):
+                    abort(500, description=str(e))
+                elif isinstance(e, SQLAlchemyError):
+                    abort(500, description=f"A database error has occurred: {str(e)}")
+                else:
+                    abort(500, description=str(e))

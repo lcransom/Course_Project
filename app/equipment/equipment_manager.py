@@ -14,16 +14,6 @@ from extensions import db
 
 
 class EquipmentManager:
-    @staticmethod
-    def handle_exceptions(e) -> NoReturn:
-        """Centralized exception handler for the Equipment domain."""
-        db.session.rollback()
-        if isinstance(e, EquipmentDataError):
-            abort(500, description=str(e))
-        elif isinstance(e, SQLAlchemyError):
-            abort(500, description=f"A database error has occurred: {str(e)}")
-        else:
-            abort(500, description=str(e))
 
     @staticmethod
     def get_all_equipment(category=None, sort_by="name", sort_order="asc", limit=None):
@@ -49,3 +39,15 @@ class EquipmentManager:
             return db.session.scalars(statement).all()
         except Exception as e:
             EquipmentManager.handle_exceptions(e)
+
+            @staticmethod
+            def handle_exceptions(e) -> NoReturn:
+                """Centralized exception handler for the Equipment domain."""
+                db.session.rollback()
+                if isinstance(e, EquipmentDataError):
+                    abort(500, description=str(e))
+                elif isinstance(e, SQLAlchemyError):
+                    abort(500, description=f"A database error has occurred: {str(e)}")
+                else:
+                    abort(500, description=str(e))
+

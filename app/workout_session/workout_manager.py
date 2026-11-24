@@ -14,16 +14,6 @@ from extensions import db
 
 
 class WorkoutManager:
-    @staticmethod
-    def handle_exceptions(e) -> NoReturn:
-        """Centralized exception handler for the Workout Session domain."""
-        db.session.rollback()
-        if isinstance(e, WorkoutDataError):
-            abort(500, description=str(e))
-        elif isinstance(e, SQLAlchemyError):
-            abort(500, description=f"A database error has occurred: {str(e)}")
-        else:
-            abort(500, description=str(e))
 
     @staticmethod
     def get_all_workout_sessions():
@@ -34,3 +24,14 @@ class WorkoutManager:
             return db.session.scalars(statement).all()
         except Exception as e:
             WorkoutManager.handle_exceptions(e)
+
+    @staticmethod
+    def handle_exceptions(e) -> NoReturn:
+        """Centralized exception handler for the Workout Session domain."""
+        db.session.rollback()
+        if isinstance(e, WorkoutDataError):
+            abort(500, description=str(e))
+        elif isinstance(e, SQLAlchemyError):
+            abort(500, description=f"A database error has occurred: {str(e)}")
+        else:
+            abort(500, description=str(e))
