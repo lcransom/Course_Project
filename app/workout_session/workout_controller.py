@@ -5,11 +5,11 @@
 
 from flask import render_template
 
-from app.workout_session.workout_manager import get_all_workout_sessions
+from app.workout_session.workout_manager import WorkoutManager
 
 
 class WorkoutController:
     @staticmethod
     def list_workouts():
-        workouts = get_all_workout_sessions()
+        workouts = WorkoutManager.get_all_workout_sessions()
         return render_template("workout_list.html", workouts=workouts)

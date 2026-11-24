@@ -47,6 +47,14 @@ def create_app():
         app.logger.exception("Unhandled data access error")
         return render_template("500.html"), 500
 
+     # NEW: This catches Flask's built-in 500 error (triggered by abort(500))
+
+    @app.errorhandler(500)
+    def handle_500_error(_error):
+        return render_template("500.html"), 500
+
+
+
     with app.app_context():
         db.create_all()
 
